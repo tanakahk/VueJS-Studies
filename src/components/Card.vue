@@ -3,8 +3,11 @@
 
     <div>
       {{a}}
+      <button @click="clickHandler">++</button>
+    </div>
 
-      <button ref="el" @click="clickHandler">++</button>
+    <div>
+      <button @click="clickGlobalHandler">++ global</button>
     </div>
 
     <div class="card-title">
@@ -17,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 
 export default defineComponent({
   props: {
@@ -25,22 +28,26 @@ export default defineComponent({
     body: { type: String, default: '' },
   },
 
-  setup() {
-    const a = ref(0);
-    const el = ref();
+  setup(props, { emit }) {
+    const state = reactive({
+      a: 0,
+      b: 0,
+      c: 0,
+    });
+    // const a = ref(0);
 
     const clickHandler = () => {
-      // console.log(e);
-      // console.log(a.value);
-      console.log(el.value);
-      a.value++;
-      el.value.innerHTML = 'hello';
+      state.a++;
+    };
+
+    const clickGlobalHandler = () => {
+      emit('plus-plus', 1);
     };
 
     return {
-      a,
-      el,
+      ...toRefs(state),
       clickHandler,
+      clickGlobalHandler,
     };
   },
 });
