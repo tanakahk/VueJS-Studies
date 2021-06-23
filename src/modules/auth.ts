@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { reactive, readonly } from 'vue';
 
 interface AuthState {
@@ -5,6 +6,7 @@ interface AuthState {
   username: string;
   password: string;
   token: string;
+  resAPI: string;
 }
 
 interface AuthMutations {
@@ -13,6 +15,7 @@ interface AuthMutations {
 
 interface AuthActions {
   login: (username: string, password: string) => boolean;
+  queryApi: (link: string) => string;
 }
 
 interface UseAuth {
@@ -23,9 +26,10 @@ interface UseAuth {
 
 const state: AuthState = reactive({
   id: '',
-  username: '',
+  username: 'Tanaka',
   password: '',
-  token: '',
+  token: 'a',
+  resAPI: '',
 });
 
 const mutations = {
@@ -33,6 +37,10 @@ const mutations = {
     state.id = id;
     state.username = username;
     state.token = token;
+  },
+
+  queryApi(resAPI: string) {
+    state.resAPI = resAPI;
   },
 
   logout() {
@@ -51,6 +59,20 @@ const actions = {
     mutations.login('id', username, 'tokenAdmin');
 
     return true;
+  },
+
+  queryApi(link: string) {
+    console.log('link do queryApi', link);
+
+    axios.get(link).then((res) => {
+      const resAPI = JSON.stringify(res);
+
+      mutations.queryApi(resAPI);
+
+      // console.log('state.queryLink', state.resAPI);
+    });
+
+    return state.resAPI;
   },
 };
 

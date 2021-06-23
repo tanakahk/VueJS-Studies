@@ -2,11 +2,11 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link to="/novo">Novo</router-link> |
+    <router-link to="/challenges">Challenges</router-link> |
     <router-link v-if="!isLogedIn" to="/login">Login</router-link>
     <a v-else href="#" @click="logout">Logout</a>
 
-    <div>Olá {{ username }}</div>
+    <div style="margin-top: 30px">Olá {{ username }}</div>
   </div>
   <router-view />
 </template>
