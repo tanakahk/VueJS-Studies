@@ -3,25 +3,53 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/novo">Novo</router-link> |
-    <router-link to="/login">Login</router-link>
+    <router-link v-if="!isLogedIn" to="/login">Login</router-link>
+    <a v-else href="#" @click="logout">Logout</a>
+
+    <div>Olá {{ username }}</div>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, defineComponent, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import useAuth from '@/modules/auth';
 
 export default defineComponent({
   setup() {
     const router = useRouter();
+    const route = useRoute();
     const auth = useAuth();
 
-    console.log('auth', auth);
     if (!auth.state.token) {
       router.push({ name: 'Login' });
     }
+
+    watch(
+      () => route.path,
+      () => {
+        if (!auth.state.token) {
+          router.push({ name: 'Login' });
+        }
+      },
+    );
+
+    const isLogedIn = computed(() => auth.state.token);
+    const username = computed(() => auth.state.username);
+
+    const logout = () => {
+      const res = auth.mutations.logout();
+      if (res) {
+        router.push({ name: 'Login' });
+      }
+    };
+
+    return {
+      isLogedIn,
+      logout,
+      username,
+    };
   },
 });
 </script>
