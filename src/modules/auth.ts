@@ -65,13 +65,12 @@ const actions = {
     console.log('link do queryApi', link);
 
     axios.get(link).then((res) => {
-      const resAPI = JSON.stringify(res);
+      const resAPI = JSON.stringify(res, null, 2);
 
       mutations.queryApi(resAPI);
 
       // console.log('state.queryLink', state.resAPI);
     });
-
     return state.resAPI;
   },
 };

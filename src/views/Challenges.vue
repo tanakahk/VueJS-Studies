@@ -8,7 +8,7 @@
     </div>
     <div>
       <div>Resultado:</div>
-      {{ res }}
+      <textarea v-model="res"/>
     </div>
   </div>
 </template>
