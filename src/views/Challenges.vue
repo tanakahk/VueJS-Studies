@@ -8,13 +8,13 @@
     </div>
     <div>
       <div>Resultado:</div>
-      {{ res }}
+      <textarea v-model="res"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import useAuth from '@/modules/auth';
+import useAuth from '@/modules/authDAula6';
 import {
  defineComponent, reactive, toRefs, computed,
 } from 'vue';
