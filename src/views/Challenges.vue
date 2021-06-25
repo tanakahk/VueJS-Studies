@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import useAuth from '@/modules/auth';
+import useAuth from '@/modules/authDAula6';
 import {
  defineComponent, reactive, toRefs, computed,
 } from 'vue';

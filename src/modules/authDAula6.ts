@@ -6,6 +6,7 @@ interface AuthState {
   username: string;
   password: string;
   token: string;
+  resAPI: string;
 }
 
 interface AuthMutations {
@@ -13,8 +14,8 @@ interface AuthMutations {
 }
 
 interface AuthActions {
-  // login: (username: string, password: string) => boolean;
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => boolean;
+  queryApi: (link: string) => string;
 }
 
 interface UseAuth {
@@ -28,6 +29,7 @@ const state: AuthState = reactive({
   username: 'Tanaka',
   password: '',
   token: 'a',
+  resAPI: '',
 });
 
 const mutations = {
@@ -35,6 +37,10 @@ const mutations = {
     state.id = id;
     state.username = username;
     state.token = token;
+  },
+
+  queryApi(resAPI: string) {
+    state.resAPI = resAPI;
   },
 
   logout() {
@@ -47,7 +53,7 @@ const mutations = {
 };
 
 const actions = {
-  /* login(username: string, password: string) {
+  login(username: string, password: string) {
     console.log('Login', username, password);
     mutations.login('id', username, 'tokenAdmin');
 
@@ -56,16 +62,17 @@ const actions = {
     });
 
     return true;
-  }, */
+  },
 
-  async login(username: string, password: string) {
-    console.log('Login', username, password);
-    mutations.login('id', username, 'tokenAdmin');
+  queryApi(link: string) {
+    console.log('link do queryApi', link);
 
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-    console.log('res', res);
+    axios.get(link).then((res) => {
+      const resAPI = JSON.stringify(res, null, 2);
 
-    return true;
+      mutations.queryApi(resAPI);
+    });
+    return state.resAPI;
   },
 };
 

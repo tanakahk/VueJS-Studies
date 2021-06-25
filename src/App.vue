@@ -7,12 +7,19 @@
     <a v-else href="#" @click="logout">Logout</a>
 
     <div style="margin-top: 30px">Olá {{ username }}</div>
+
+    <div>
+      <button @click="fnSync">Sync</button>
+      <button @click="fnAsync">Async</button>
+      <button @click="fnPromisse">Promisse</button>
+    </div>
   </div>
   <router-view />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue';
+import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
 import useAuth from '@/modules/auth';
 
@@ -45,10 +52,55 @@ export default defineComponent({
       }
     };
 
+    const fnSync = () => {
+      console.log('Início do fnSync');
+      axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+        console.log('pronto', res);
+      });
+      console.log('fim do fnSync');
+    };
+
+    const fnPromise = () => new Promise((resolve, reject) => {
+        console.log('Início do promise');
+
+        const ok = true;
+        if (ok) {
+          setTimeout(() => {
+            console.log('resolvido');
+            resolve(ok);
+          }, 5000);
+        } else {
+          setTimeout(() => {
+            console.log('não resolvido');
+            reject(ok);
+          }, 5000);
+        }
+
+        console.log('Fim do promise');
+      });
+
+    const fnAsync = async () => {
+      console.log('Início do Async');
+      /* const res = await axios.get('https://jsonplaceholder.typicode.com/users');
+      console.log('pronto', res); */
+
+      /* fnPromise().then((res) => {
+        console.log(res);
+      }); */
+
+      const res = await fnPromise();
+      console.log(res);
+
+      console.log('FIM do Async');
+    };
+
     return {
       isLogedIn,
       logout,
       username,
+      fnSync,
+      fnAsync,
+      fnPromise,
     };
   },
 });
