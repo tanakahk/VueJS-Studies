@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-    Componente home.vue
-
-    <div>A: {{a}}</div>
-
+    <div>Pokemons disponiveis</div>
     <div style="display: flex; flex-wrap: wrap">
-        <card title="1" body="Corpo"
-        @plus-plus="plusHandler" />
-        <card title="novo título" body="novo card" @plus-plus="plusHandler" />
+      <div v-for="p in pokemons" :key="p.id">
+    <card :title="p.name" body="" :types="p.types" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import {
+ defineComponent, reactive, toRefs, computed,
+} from 'vue';
 import Card from '@/components/Card.vue';
+import useCards from '@/modules/cards';
 
 export default defineComponent({
   components: {
@@ -22,18 +22,16 @@ export default defineComponent({
   },
 
   setup() {
-    const state = reactive({
-      a: 0,
-    });
+    const cards = useCards();
+    const state = reactive({});
 
-    const plusHandler = (value:number) => {
-      console.log('plus', value);
-      state.a += value;
-    };
+    const pokemons = computed(() => cards.state.pokemons);
+
+    cards.actions.loadPokemons();
 
     return {
       ...toRefs(state),
-      plusHandler,
+      pokemons,
     };
   },
 });
