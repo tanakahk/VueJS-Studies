@@ -3,9 +3,11 @@
     <div>Pokemons disponiveis</div>
     <div style="display: flex; flex-wrap: wrap">
       <div v-for="p in pokemons" :key="p.id">
-    <card :title="p.name" body="" :types="p.types" />
+        <card :pokemon="p" :images="getImages(p)" :types="p.types" />
+        <!-- :title="p.name" body="p.height" -->
       </div>
     </div>
+    <button @click="loadMore">Carregar mais pokemons</button>
   </div>
 </template>
 
@@ -14,7 +16,7 @@ import {
  defineComponent, reactive, toRefs, computed,
 } from 'vue';
 import Card from '@/components/Card.vue';
-import useCards from '@/modules/cards';
+import useCards, { Pokemon } from '@/modules/cards';
 
 export default defineComponent({
   components: {
@@ -27,11 +29,22 @@ export default defineComponent({
 
     const pokemons = computed(() => cards.state.pokemons);
 
+    const getImages = (pokemon: Pokemon) => [
+      pokemon.sprites.frontDefault,
+      pokemon.sprites.backDefault,
+    ];
+
+    const loadMore = () => {
+      cards.actions.loadPokemons();
+    };
+
     cards.actions.loadPokemons();
 
     return {
       ...toRefs(state),
       pokemons,
+      getImages,
+      loadMore,
     };
   },
 });

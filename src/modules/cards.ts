@@ -6,7 +6,7 @@ interface PokemonApi {
   url: string
 }
 
-interface PokemonType {
+export interface PokemonType { // quando exportar, ela poderá ser utilzada em qualquer lugar do app
   slot: number
   type: {
     name: string
@@ -14,7 +14,7 @@ interface PokemonType {
   }
 }
 
-interface Pokemon {
+export interface Pokemon {
   id: number
   name: string
   types: PokemonType[]
@@ -26,16 +26,19 @@ interface Pokemon {
   }
 }
 
-interface CardState {
+export interface CardState {
   pokemons: Pokemon[]
   myPokemons: Pokemon[]
   busy: boolean
+  nextUrl: string
 }
 
 const state: CardState = reactive({
   pokemons: [],
   myPokemons: [],
   busy: false,
+  nextUrl: 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=1000',
+  // limita em 5 pokemons e começa do pokemon 0
 });
 
 const mutations = {
@@ -46,6 +49,10 @@ const mutations = {
     } else {
       console.log('Estou disponível');
     }
+  },
+
+  setNextUrl(url: string) {
+    state.nextUrl = url;
   },
 
   processPokemon(pokemon: Pokemon) {
@@ -61,7 +68,12 @@ const mutations = {
 const actions = {
   async loadPokemons() {
     mutations.setBusy(true);
-    const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=5&offset=0');
+    const res = await axios.get(state.nextUrl);
+
+    if (res.data.next) {
+      mutations.setNextUrl(res.data.next);
+    }
+
     res.data.results.forEach((pokemon: PokemonApi) => {
       actions.loadPokemon(pokemon.url);
     });
