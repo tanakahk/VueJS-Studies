@@ -5,17 +5,22 @@
     </div>
     <div>
       {{ body }}
+
+      <types :types="types" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Types from './Types.vue';
 
 export default defineComponent({
+  components: { Types },
   props: {
     title: { type: String, default: '' },
     body: { type: String, default: '' },
+    types: { type: Array, required: true },
   },
 
   setup() {

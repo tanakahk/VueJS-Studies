@@ -2,14 +2,17 @@
   <div class="home">
     <div>Pokemons disponiveis</div>
     <div style="display: flex; flex-wrap: wrap">
-      <card title="Título 1" body="Corpo" />
-      <card title="novo título" body="novo card" />
+      <div v-for="p in pokemons" :key="p.id">
+    <card :title="p.name" body="" :types="p.types" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import {
+ defineComponent, reactive, toRefs, computed,
+} from 'vue';
 import Card from '@/components/Card.vue';
 import useCards from '@/modules/cards';
 
@@ -22,12 +25,13 @@ export default defineComponent({
     const cards = useCards();
     const state = reactive({});
 
-    console.log(cards);
+    const pokemons = computed(() => cards.state.pokemons);
 
     cards.actions.loadPokemons();
 
     return {
       ...toRefs(state),
+      pokemons,
     };
   },
 });
