@@ -1,11 +1,16 @@
 <template>
   <div class="card">
     <div class="card-title">
-      {{ title }}
+      {{ pokemon.name }}
     </div>
     <div>
-      {{ body }}
-
+      <carousel :images="images" />
+    </div>
+    <div>
+      <div>Altura: {{ pokemon.height }}</div>
+      <div>Peso: {{ pokemon.weight }}</div>
+    </div>
+    <div>
       <types :types="types" />
     </div>
   </div>
@@ -13,18 +18,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Carousel from './Carousel.vue';
 import Types from './Types.vue';
 
 export default defineComponent({
-  components: { Types },
+  components: { Types, Carousel },
   props: {
-    title: { type: String, default: '' },
-    body: { type: String, default: '' },
+    pokemon: { type: Object, required: true },
+    images: { type: Array, required: true },
     types: { type: Array, required: true },
   },
 
   setup() {
-    return {};
+    return {
+    };
   },
 });
 </script>
@@ -34,7 +41,8 @@ export default defineComponent({
   border: 1px solid black;
   padding: 5px;
   width: 200px;
-  height: 200px;
+  /* height: 200px; */
+  height: fit-content;
   margin: 5px;
 }
 
