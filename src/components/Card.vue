@@ -2,7 +2,6 @@
   <div class="card">
     <div class="card-title">
       {{ pokemon.name }}
-      <!-- {{ title }} -->
     </div>
     <div>
       <carousel :images="images" />
@@ -10,8 +9,6 @@
     <div>
       <div>Altura: {{ pokemon.height }}</div>
       <div>Peso: {{ pokemon.weight }}</div>
-
-      <!-- {{ body }} -->
     </div>
     <div>
       <types :types="types" />
@@ -20,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import Carousel from './Carousel.vue';
 import Types from './Types.vue';
 
@@ -28,16 +25,12 @@ export default defineComponent({
   components: { Types, Carousel },
   props: {
     pokemon: { type: Object, required: true },
-    // title: { type: String, default: '' },
-    // body: { type: String, default: '' },
     images: { type: Array, required: true },
     types: { type: Array, required: true },
   },
 
-  setup(props) {
-    const body = computed(() => `Altura: ${props.pokemon.height}`);
+  setup() {
     return {
-      body,
     };
   },
 });

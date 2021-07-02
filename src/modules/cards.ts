@@ -37,7 +37,7 @@ const state: CardState = reactive({
   pokemons: [],
   myPokemons: [],
   busy: false,
-  nextUrl: 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=1000',
+  nextUrl: 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=0',
   // limita em 5 pokemons e começa do pokemon 0
 });
 
