@@ -2,15 +2,15 @@
   <div
     style="
       display: flex;
-      width: 100%;
+      width: 200px;
       height: 96px;
       justify-content: center;
       align-items: center;
     "
   >
     <div @click="setCurrent()">Prev</div>
-    <img v-if="current === 0" :src="images[0]" />
-    <img v-else :src="images[1]" />
+    <img style="width: 96px; height: 96px;" v-if="current === 0" :src="images[0]" />
+    <img style="width: 96px; height: 96px;" v-else :src="images[1]" />
     <div @click="setCurrent()">Next</div>
   </div>
 </template>

@@ -1,7 +1,9 @@
 <template>
   <div v-if="open" class="modal" @click="clickHandler">
     <div class="modal-container">
-      <div class="modalClose" @click="$emit('on-close')">X</div>
+      <div class="modalAlignClose">
+        <div class="modalClose" @click="$emit('on-close')">X</div>
+      </div>
       <slot />
     </div>
   </div>
@@ -21,7 +23,6 @@ export default defineComponent({
     const clickHandler = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
       if (el.className === 'modal') {
-        console.log('click', el.className);
         emit('on-close');
       }
     };
@@ -55,10 +56,15 @@ export default defineComponent({
   border-radius: 5px;
 }
 
+.modalAlignClose {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .modalClose {
-  text-align: right;
   color: red;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 </style>
