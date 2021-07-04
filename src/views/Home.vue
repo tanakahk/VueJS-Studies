@@ -4,7 +4,6 @@
     <div style="display: flex; flex-wrap: wrap">
       <div v-for="p in pokemons" :key="p.id">
         <card :pokemon="p" :images="getImages(p)" :types="p.types" />
-        <!-- :title="p.name" body="p.height" -->
       </div>
     </div>
     <button @click="loadMore">Carregar mais pokemons</button>

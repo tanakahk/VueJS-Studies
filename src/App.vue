@@ -6,7 +6,7 @@
     <router-link v-if="!isLogedIn" to="/login">Login</router-link>
     <a v-else href="#" @click="logout">Logout</a>
 
-    <div style="margin-top: 30px">Olá {{ username }}</div>
+    <div style="margin-top: 30px">Hi {{ username }}</div>
 
     <div>
       <button @click="fnSync">Sync</button>

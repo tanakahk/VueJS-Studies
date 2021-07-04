@@ -6,9 +6,18 @@ interface PokemonApi {
   url: string
 }
 
-export interface PokemonType { // quando exportar, ela poderá ser utilzada em qualquer lugar do app
+export interface PokemonType {
   slot: number
   type: {
+    name: string
+    url: string
+  }
+}
+
+export interface PokemonStat {
+  baseStat: number
+  effort: number
+  stat: {
     name: string
     url: string
   }
@@ -24,6 +33,8 @@ export interface Pokemon {
     backDefault: string
     frontDefault: string
   }
+  price: number
+  stats: PokemonStat[]
 }
 
 export interface CardState {
@@ -38,7 +49,6 @@ const state: CardState = reactive({
   myPokemons: [],
   busy: false,
   nextUrl: 'https://pokeapi.co/api/v2/pokemon?limit=5&offset=0',
-  // limita em 5 pokemons e começa do pokemon 0
 });
 
 const mutations = {
@@ -92,6 +102,15 @@ const actions = {
         backDefault: res.data.sprites.back_default,
         frontDefault: res.data.sprites.front_default,
       },
+      price: Math.ceil(Math.random() * 100),
+      stats: res.data.stats.map((stat:any) => ({
+        baseStat: stat.base_stat,
+        effort: stat.effort,
+        stat: {
+          name: stat.stat.name,
+          url: stat.stat.url,
+        },
+      })),
     };
     mutations.processPokemon(pokemon);
   },
