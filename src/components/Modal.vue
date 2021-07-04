@@ -21,7 +21,7 @@ export default defineComponent({
     const clickHandler = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
       if (el.className === 'modal') {
-        console.log('click', el.className); // testei com classList.value e deu o msm resultado
+        console.log('click', el.className);
         emit('on-close');
       }
     };
