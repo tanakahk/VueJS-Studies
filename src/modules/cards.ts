@@ -107,7 +107,7 @@ const actions = {
         frontDefault: res.data.sprites.front_default,
       },
       price: Math.ceil(Math.random() * 100),
-      stats: res.data.stats.map((stat:any) => ({
+      stats: res.data.stats.map((stat: any) => ({
         baseStat: stat.base_stat,
         effort: stat.effort,
         stat: {
@@ -123,10 +123,8 @@ const actions = {
     // TODO: Quando implementar API
 
     const key = 'pokeStore';
-    // const pokemons = localStorage.getItem(key) || ''; //forma 1
     const pokemons = localStorage.getItem(key);
-    if (pokemons) { // forma 2
-      // console.log('pokemons do local', JSON.parse(pokemons));
+    if (pokemons) {
       state.myPokemons = JSON.parse(pokemons);
     }
 
@@ -134,7 +132,6 @@ const actions = {
   },
 
   async buyPokemon(pokemon: Pokemon): Promise<boolean> {
-    console.log('buying', pokemon);
     // TODO: 1. fazer chamada API de compra
 
     mutations.buyPokemon(pokemon);

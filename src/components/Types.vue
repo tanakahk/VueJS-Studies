@@ -1,5 +1,5 @@
 <template>
-<label>Types:</label>
+  <label>Types:</label>
   <div class="t-container">
     <div v-for="type in types" :key="type.slot" class="t-item">
       <img v-if="type.type.name === 'grass'" src="@/assets/leaf.svg" />

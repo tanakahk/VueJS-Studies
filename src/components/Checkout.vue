@@ -50,7 +50,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -82,5 +81,4 @@ export default defineComponent({
 .actions {
   grid-area: actions;
 }
-
 </style>

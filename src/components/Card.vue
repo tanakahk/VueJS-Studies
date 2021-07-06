@@ -76,5 +76,4 @@ export default defineComponent({
 .card-title {
   border-bottom: 1px solid black;
 }
-
 </style>
