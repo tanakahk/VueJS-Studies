@@ -8,10 +8,10 @@
     </div>
     <button @click="loadMore">Carregar mais pokemons</button>
 
-    <div>Meus Pokemons</div>
+    <div style="margin-top: 50px">Meus Pokemons</div>
     <div style="display: flex; flex-wrap: wrap">
       <div v-for="p in myPokemons" :key="p.id">
-        <card :pokemon="p" :images="getImages(p)" :types="p.types" />
+        <card :pokemon="p" :images="getImages(p)" :types="p.types" is-mine />
       </div>
     </div>
   </div>

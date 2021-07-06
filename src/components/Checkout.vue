@@ -12,7 +12,8 @@
       </div>
       <div class="actions">
         <button @click="$emit('on-close')">Cancelar</button>
-        <button @click="buy">Confirmar</button>
+        <button v-if="is - sell" @click="sell">Vender</button>
+        <button v-else @click="buy">Comprar</button>
       </div>
     </div>
   </modal>
@@ -29,6 +30,7 @@ export default defineComponent({
   emits: ['on-close'],
   props: {
     open: Boolean,
+    isSell: Boolean,
     pokemon: { type: Object, required: true },
     images: { type: Array, required: true },
   },
@@ -42,8 +44,18 @@ export default defineComponent({
       }
     };
 
+    const sell = () => {
+      // msma coisa do buy, mas aqui foi usado a promessa ao invés do async
+      cards.actions.sellPokemon(props.pokemon as Pokemon).then((res) => {
+        if (res) {
+          emit('on-close');
+        }
+      });
+    };
+
     return {
       buy,
+      sell,
     };
   },
 });

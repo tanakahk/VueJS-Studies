@@ -77,6 +77,10 @@ const mutations = {
   buyPokemon(pokemon: Pokemon) {
     state.myPokemons.push(pokemon);
   },
+
+  sellPokemon(pokemon: Pokemon) {
+    state.myPokemons = state.myPokemons.filter((p) => p.id !== pokemon.id);
+  },
 };
 
 const actions = {
@@ -135,6 +139,17 @@ const actions = {
     // TODO: 1. fazer chamada API de compra
 
     mutations.buyPokemon(pokemon);
+
+    const key = 'pokeStore';
+    localStorage.setItem(key, JSON.stringify(state.myPokemons));
+
+    return true;
+  },
+
+  async sellPokemon(pokemon: Pokemon): Promise<boolean> {
+    // TODO: 1. fazer chamada API de compra
+
+    mutations.sellPokemon(pokemon);
 
     const key = 'pokeStore';
     localStorage.setItem(key, JSON.stringify(state.myPokemons));

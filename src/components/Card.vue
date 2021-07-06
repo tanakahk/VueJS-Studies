@@ -10,7 +10,12 @@
       <div>Altura: {{ pokemon.height }}</div>
       <div>Peso: {{ pokemon.weight }}</div>
       <div>Preço: {{ pokemon.price }}</div>
-      <div><button @click="modalBuyOpen = true">Comprar</button></div>
+      <div>
+        <button @click="modalBuyOpen = true">
+          <span v-if="!isMine">Comprar</span>
+          <span v-else>Vender</span>
+        </button>
+      </div>
       <div><button @click="modalOpen = true">Stats</button></div>
     </div>
     <div>
@@ -24,10 +29,20 @@
     </modal>
 
     <checkout
+      v-if="!isMine"
       :open="modalBuyOpen"
       :pokemon="pokemon"
       :images="images"
       @on-close="modalBuyOpen = false"
+    />
+
+    <checkout
+      v-else
+      :open="modalBuyOpen"
+      :pokemon="pokemon"
+      :images="images"
+      @on-close="modalBuyOpen = false"
+      isSell
     />
   </div>
 </template>
@@ -47,6 +62,7 @@ export default defineComponent({
     Checkout,
   },
   props: {
+    isMine: Boolean,
     pokemon: { type: Object, required: true },
     images: { type: Array, required: true },
     types: { type: Array, required: true },
