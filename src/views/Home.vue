@@ -7,13 +7,18 @@
       </div>
     </div>
     <button @click="loadMore">Carregar mais pokemons</button>
+
+    <div>Meus Pokemons</div>
+    <div style="display: flex; flex-wrap: wrap">
+      <div v-for="p in myPokemons" :key="p.id">
+        <card :pokemon="p" :images="getImages(p)" :types="p.types" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
- defineComponent, reactive, toRefs, computed,
-} from 'vue';
+import { defineComponent, computed } from 'vue';
 import Card from '@/components/Card.vue';
 import useCards, { Pokemon } from '@/modules/cards';
 
@@ -24,9 +29,9 @@ export default defineComponent({
 
   setup() {
     const cards = useCards();
-    const state = reactive({});
 
     const pokemons = computed(() => cards.state.pokemons);
+    const myPokemons = computed(() => cards.state.myPokemons);
 
     const getImages = (pokemon: Pokemon) => [
       pokemon.sprites.frontDefault,
@@ -38,10 +43,11 @@ export default defineComponent({
     };
 
     cards.actions.loadPokemons();
+    cards.actions.loadMyPokemons();
 
     return {
-      ...toRefs(state),
       pokemons,
+      myPokemons,
       getImages,
       loadMore,
     };

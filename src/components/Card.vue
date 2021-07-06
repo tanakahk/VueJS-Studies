@@ -10,6 +10,7 @@
       <div>Altura: {{ pokemon.height }}</div>
       <div>Peso: {{ pokemon.weight }}</div>
       <div>Preço: {{ pokemon.price }}</div>
+      <div><button @click="modalBuyOpen = true">Comprar</button></div>
       <div><button @click="modalOpen = true">Stats</button></div>
     </div>
     <div>
@@ -18,20 +19,33 @@
 
     <modal :open="modalOpen" @on-close="modalOpen = false">
       <div v-for="stat in pokemon.stats" :key="stat.name">
-        {{stat.stat.name}} {{stat.baseStat}}
+        {{ stat.stat.name }} {{ stat.baseStat }}
       </div>
     </modal>
+
+    <checkout
+      :open="modalBuyOpen"
+      :pokemon="pokemon"
+      :images="images"
+      @on-close="modalBuyOpen = false"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import Carousel from './Carousel.vue';
+import Checkout from './Checkout.vue';
 import Modal from './Modal.vue';
 import Types from './Types.vue';
 
 export default defineComponent({
-  components: { Types, Carousel, Modal },
+  components: {
+    Types,
+    Carousel,
+    Modal,
+    Checkout,
+  },
   props: {
     pokemon: { type: Object, required: true },
     images: { type: Array, required: true },
@@ -40,8 +54,11 @@ export default defineComponent({
 
   setup() {
     const modalOpen = ref(false);
+    const modalBuyOpen = ref(false);
+
     return {
       modalOpen,
+      modalBuyOpen,
     };
   },
 });
