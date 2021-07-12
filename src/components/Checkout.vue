@@ -12,7 +12,7 @@
       </div>
       <div class="actions">
         <button @click="$emit('on-close')">Cancelar</button>
-        <button v-if="is - sell" @click="sell">Vender</button>
+        <button v-if="isSell" @click="sell">Vender</button>
         <button v-else @click="buy">Comprar</button>
       </div>
     </div>
